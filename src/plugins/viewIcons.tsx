@@ -17,10 +17,10 @@
 */
 
 import { addContextMenuPatch, NavContextMenuPatchCallback, removeContextMenuPatch } from "@api/ContextMenu";
-import { definePluginSettings } from "@api/settings";
+import { definePluginSettings } from "@api/Settings";
 import { Devs } from "@utils/constants";
-import { LazyComponent } from "@utils/misc";
 import { ModalRoot, ModalSize, openModal } from "@utils/modal";
+import { LazyComponent } from "@utils/react";
 import definePlugin, { OptionType } from "@utils/types";
 import { find, findByCode, findByPropsLazy } from "@webpack";
 import { GuildMemberStore, Menu } from "@webpack/common";
@@ -84,7 +84,7 @@ function openImage(url: string) {
 const UserContext: NavContextMenuPatchCallback = (children, { user, guildId }: UserContextProps) => () => {
     const memberAvatar = GuildMemberStore.getMember(guildId!, user.id)?.avatar || null;
 
-    children.splice(1, 0, (
+    children.splice(-1, 0, (
         <Menu.MenuGroup>
             <Menu.MenuItem
                 id="view-avatar"
@@ -109,13 +109,7 @@ const UserContext: NavContextMenuPatchCallback = (children, { user, guildId }: U
 const GuildContext: NavContextMenuPatchCallback = (children, { guild: { id, icon, banner } }: GuildContextProps) => () => {
     if (!banner && !icon) return;
 
-    // before copy id (if it exists)
-    const idx = children.length +
-        children[children.length - 1]?.props?.children?.props?.id === "devmode-copy-id"
-        ? -2
-        : -1;
-
-    children.splice(idx, 0, (
+    children.splice(-1, 0, (
         <Menu.MenuGroup>
             {icon ? (
                 <Menu.MenuItem
