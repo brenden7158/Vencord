@@ -1,6 +1,6 @@
 /*
  * Vencord, a modification for Discord's desktop app
- * Copyright (c) 2022 Vendicated and contributors
+ * Copyright (c) 2023 Vendicated and contributors
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -16,6 +16,25 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-export { default as PatchHelper } from "./PatchHelper";
-export { default as PluginSettings } from "./PluginSettings";
-export { default as VencordSettings } from "./VencordSettings";
+export interface ImageModalClasses {
+    image: string,
+    modal: string,
+    responsiveWidthMobile: string;
+}
+
+export interface ButtonWrapperClasses {
+    hoverScale: string;
+    buttonWrapper: string;
+    button: string;
+    iconMask: string;
+    buttonContent: string;
+    icon: string;
+    pulseIcon: string;
+    pulseButton: string;
+    notificationDot: string;
+    sparkleContainer: string;
+    sparkleStar: string;
+    sparklePlus: string;
+    sparkle: string;
+    active: string;
+}

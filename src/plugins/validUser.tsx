@@ -24,7 +24,7 @@ import definePlugin from "@utils/types";
 import { findByCodeLazy } from "@webpack";
 import { UserStore, useState } from "@webpack/common";
 import type { User } from "discord-types/general";
-import type { ComponentType } from "react";
+import type { ComponentType, ReactNode } from "react";
 
 const fetching = new Set<string>();
 const queue = new Queue(5);
@@ -36,7 +36,7 @@ interface MentionProps {
         channelId?: string;
         content: any;
     };
-    parse: (content: any, props: MentionProps["props"]) => string[];
+    parse: (content: any, props: MentionProps["props"]) => ReactNode;
     props: {
         key: string;
         formatInline: boolean;
@@ -72,7 +72,7 @@ function MentionWrapper({ data, UserMention, RoleMention, parse, props }: Mentio
         >
             <span
                 onMouseEnter={() => {
-                    const mention = children?.[0];
+                    const mention = children?.[0]?.props?.children;
                     if (typeof mention !== "string") return;
 
                     const id = mention.match(/<@(\d+)>/)?.[1];
@@ -116,6 +116,7 @@ export default definePlugin({
     name: "ValidUser",
     description: "Fix mentions for unknown users showing up as '<@343383572805058560>' (hover over a mention to fix it)",
     authors: [Devs.Ven],
+    tags: ["MentionCacheFix"],
 
     patches: [{
         find: 'className:"mention"',
